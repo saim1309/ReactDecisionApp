@@ -1,0 +1,12 @@
+{
+  "name": "Decision-App",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/saim1309/https---github.com-saim1309-ReactDecisionApp.git",
+  "author": "Saim Ahmad <Sahmad5349@conestogac.on.ca>",
+  "license": "MIT",
+  "dependencies": {
+    "babel-preset-env": "1.5.2",
+    "babel-preset-react": "6.24.1"
+  }
+}
