@@ -26,7 +26,38 @@ var IndecisionApp = function (_React$Component) {
     return _this;
   }
 
+  /**Life cycle methods availble only to class based components*/
+
+
   _createClass(IndecisionApp, [{
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      try {
+        console.log("fetching data");
+        var json = localStorage.getItem("options");
+        var options = JSON.parse(json);
+        if (options) {
+          this.setState(function () {
+            return { options: options };
+          });
+        }
+      } catch (e) {}
+    }
+  }, {
+    key: "componentDidUpdate",
+    value: function componentDidUpdate(prevProps, prevState) {
+      if (prevState.options.length !== this.state.options.length) {
+        console.log("saving data");
+        var json = JSON.stringify(this.state.options);
+        localStorage.setItem("options", json);
+      }
+    }
+  }, {
+    key: "componentWillUnmount",
+    value: function componentWillUnmount() {
+      console.log("Unmount");
+    }
+  }, {
     key: "addOption",
     value: function addOption(option) {
       if (!option) {
@@ -193,6 +224,11 @@ var Options = function Options(props) {
       { onClick: props.removeAll },
       "Remove All"
     ),
+    props.options.length === 0 && React.createElement(
+      "p",
+      null,
+      "Please add an option to get started"
+    ),
     props.options.map(function (option) {
       return React.createElement(Option, {
         key: option,
@@ -277,9 +313,11 @@ var AddOption = function (_React$Component2) {
     value: function handleAddOption(e) {
       e.preventDefault();
       var option = e.target.elements.option.value.trim();
-      e.target.elements.option.value = '';
       var errorMsg = this.props.addOption(option);
 
+      if (!errorMsg) {
+        e.target.elements.option.value = '';
+      }
       // this.setState(() =>{
       //   return{
       //     error: errorMsg
