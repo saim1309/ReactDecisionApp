@@ -20,7 +20,7 @@ var IndecisionApp = function (_React$Component) {
   _createClass(IndecisionApp, [{
     key: 'render',
     value: function render() {
-      var title = 'Indecision';
+      var title = 'Indecisionssss';
       var subtitle = 'Put your life in the hands of a computer';
       var options = ['Thing one', 'Thing two', 'Thing four'];
 

@@ -1,6 +1,6 @@
 class IndecisionApp extends React.Component {
     render() {
-      const title = 'Indecision';
+      const title = 'Indecisionssss';
       const subtitle = 'Put your life in the hands of a computer';
       const options = ['Thing one', 'Thing two', 'Thing four'];
   
