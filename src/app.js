@@ -4,6 +4,7 @@ class IndecisionApp extends React.Component{
     this.removeAll = this.removeAll.bind(this);
     this.handlePick = this.handlePick.bind(this);
     this.addOption = this.addOption.bind(this);
+    this.removeOne = this.removeOne.bind(this);
     this.state ={
       options : props.options
     };
@@ -17,19 +18,35 @@ class IndecisionApp extends React.Component{
       return "This item is already present in list!"
     }
     console.log(option);
-    this.setState((prevState)=>{
-      return{
-        options: prevState.options.concat(option) 
-      };
-    });
+    // this.setState((prevState)=>{
+    //   return{
+    //     options: prevState.options.concat(option) 
+    //   };
+    // });
+    this.setState((prevState)=> ({
+      options: prevState.options.concat(option)
+    }));
   }
 
+  // removeAll(){
+  //   this.setState(()=>{
+  //     return{
+  //       options:[]
+  //     };
+  //   });
+  // }
+  /*NEW SYNTAX FOR SETSTATE */
   removeAll(){
-    this.setState(()=>{
-      return{
-        options:[]
-      };
-    });
+    this.setState(()=> ({options:[]}));
+  }
+
+  //filter fn removes the option when false is returned and add option to new array when true is returned
+  removeOne(optionToRemove){
+    this.setState((prevState)=>({
+      options : prevState.options.filter((option)=>{
+        return optionToRemove !== option
+      })
+    }));
   }
 
   handlePick(){
@@ -52,7 +69,8 @@ class IndecisionApp extends React.Component{
         />
         <Options 
           options={this.state.options} 
-          removeAll={this.removeAll} 
+          removeAll={this.removeAll}
+          removeOne={this.removeOne} 
         />
         <AddOption 
           addOption = {this.addOption}
@@ -129,9 +147,15 @@ const Options = (props) =>{
       <div>
         <button onClick={props.removeAll}>Remove All</button>
         {
-          props.options.map((option) => <Option key={option} optionText={option} />)
+          props.options.map((option) => (
+            <Option 
+              key={option} 
+              optionText={option}
+              removeOne={props.removeOne} 
+            />
+          ))
         }
-        <Option />
+        
       </div>
     );
 }
@@ -165,12 +189,17 @@ const Options = (props) =>{
 const Option = (props) =>{
   return(
     <div>
-    {
-      props.optionText
-    }
+    {props.optionText}
+    <button 
+      onClick={(e)=>{
+        props.removeOne(props.optionText);
+      }}
+    >
+      Remove
+    </button>
     </div>
   );
-}
+};
 
 // class Option extends React.Component{
 //   render(){
@@ -200,11 +229,12 @@ class AddOption extends React.Component{
     e.target.elements.option.value = '';
     let errorMsg = this.props.addOption(option);
     
-    this.setState(() =>{
-      return{
-        error: errorMsg
-      };
-    });
+    // this.setState(() =>{
+    //   return{
+    //     error: errorMsg
+    //   };
+    // });
+    this.setState(()=>({error:errorMsg}));
   }
 
   render(){

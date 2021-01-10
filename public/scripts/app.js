@@ -19,6 +19,7 @@ var IndecisionApp = function (_React$Component) {
     _this.removeAll = _this.removeAll.bind(_this);
     _this.handlePick = _this.handlePick.bind(_this);
     _this.addOption = _this.addOption.bind(_this);
+    _this.removeOne = _this.removeOne.bind(_this);
     _this.state = {
       options: props.options
     };
@@ -34,18 +35,45 @@ var IndecisionApp = function (_React$Component) {
         return "This item is already present in list!";
       }
       console.log(option);
+      // this.setState((prevState)=>{
+      //   return{
+      //     options: prevState.options.concat(option) 
+      //   };
+      // });
       this.setState(function (prevState) {
         return {
           options: prevState.options.concat(option)
         };
       });
     }
+
+    // removeAll(){
+    //   this.setState(()=>{
+    //     return{
+    //       options:[]
+    //     };
+    //   });
+    // }
+    /*NEW SYNTAX FOR SETSTATE */
+
   }, {
     key: "removeAll",
     value: function removeAll() {
       this.setState(function () {
+        return { options: [] };
+      });
+    }
+
+    //filter fn removes the option when false is returned and add option to new array when true is returned
+
+  }, {
+    key: "removeOne",
+    value: function removeOne(optionToRemove) {
+      this.setState(function (prevState) {
         return {
-          options: []
+          options: prevState.options.filter(function (option) {
+            return optionToRemove !== option;
+          })
         };
       });
     }
@@ -73,7 +101,8 @@ var IndecisionApp = function (_React$Component) {
         }),
         React.createElement(Options, {
           options: this.state.options,
-          removeAll: this.removeAll
+          removeAll: this.removeAll,
+          removeOne: this.removeOne
         }),
         React.createElement(AddOption, {
           addOption: this.addOption
@@ -165,9 +194,12 @@ var Options = function Options(props) {
       "Remove All"
     ),
     props.options.map(function (option) {
-      return React.createElement(Option, { key: option, optionText: option });
-    }),
-    React.createElement(Option, null)
+      return React.createElement(Option, {
+        key: option,
+        optionText: option,
+        removeOne: props.removeOne
+      });
+    })
   );
 };
 
@@ -200,7 +232,16 @@ var Option = function Option(props) {
   return React.createElement(
     "div",
     null,
-    props.optionText
+    props.optionText,
+    React.createElement(
+      "button",
+      {
+        onClick: function onClick(e) {
+          props.removeOne(props.optionText);
+        }
+      },
+      "Remove"
+    )
   );
 };
 
@@ -239,10 +280,13 @@ var AddOption = function (_React$Component2) {
       e.target.elements.option.value = '';
       var errorMsg = this.props.addOption(option);
 
+      // this.setState(() =>{
+      //   return{
+      //     error: errorMsg
+      //   };
+      // });
       this.setState(function () {
-        return {
-          error: errorMsg
-        };
+        return { error: errorMsg };
       });
     }
   }, {
