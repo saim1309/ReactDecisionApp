@@ -3,11 +3,13 @@ import Header from "./Header";
 import Action from "./Action";
 import Options from "./Options";
 import AddOption from "./AddOption";
+import OptionModal from "./OptionModal";
 
 export default class IndecisionApp extends React.Component{
 
   state = {
-    options: []
+    options: [],
+    selectedOption : undefined
   };
 
   // constructor(props){
@@ -76,6 +78,10 @@ export default class IndecisionApp extends React.Component{
   removeAll = () =>{
     this.setState(()=> ({options:[]}));
   }
+
+  closeModal = () =>{
+    this.setState(()=>({selectedOption : undefined }));
+  }
   
   //filter fn removes the option when false is returned and add option to new array when true is returned
   removeOne = (optionToRemove) => {
@@ -89,7 +95,10 @@ export default class IndecisionApp extends React.Component{
   handlePick = () => {
     const randomNum = Math.floor(Math.random() * this.state.options.length);
     const option = this.state.options[randomNum];
-    alert(option);
+    //alert(option);
+    this.setState(()=> ({
+      selectedOption: option
+    }));
   }
   
   render(){
@@ -111,6 +120,10 @@ export default class IndecisionApp extends React.Component{
         />
         <AddOption 
           addOption = {this.addOption}
+        />
+        <OptionModal
+          selectedOption = {this.state.selectedOption}
+          closeModal={this.closeModal}
         />
       </div>
     );
