@@ -1,0 +1,18 @@
+.header{
+    background: $off-black;
+    margin-bottom: $xlarge-size;
+    padding: $med-Size 0;
+    color: white;
+}
+ // BEM(Block element modifier) naming convention to avoid nested css
+.header__title{
+    font-size: $large-size;
+    margin: 0;
+}
+
+.header__subtitle{
+    color: $off-white;
+    font-size: $med-Size;
+    font-weight: 500;
+    margin: 0;
+}

@@ -1,27 +1,31 @@
 import React from "react";
 
-const Header = (props) =>{
-    return(
-      <div>
-        <h1>{props.title}</h1>
-        {props.subTitle && <h2>{props.subTitle}</h2>}
+const Header = (props) => {
+  return (
+    <div className="header">
+      <div className="container">
+        <h1 className="header__title">{props.title}</h1>
+        {props.subTitle && (
+          <h2 className="header__subtitle">{props.subTitle}</h2>
+        )}
       </div>
-    ); 
-  }
-  
-  Header.defaultProps = {
-    title: "Indecision App"
-  };
+    </div>
+  );
+};
 
-  export default Header;
+Header.defaultProps = {
+  title: "Indecision App",
+};
 
-  // class Header extends React.Component{
+export default Header;
+
+// class Header extends React.Component{
 //   render(){
 //     return(
 //       <div>
 //         <h1>{this.props.title}</h1>
 //         <h2>{this.props.subTitle}</h2>
 //       </div>
-//     );  
+//     );
 //   }
 // }
