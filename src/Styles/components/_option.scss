@@ -10,4 +10,5 @@
     font-weight: 500;
     font-size: 2rem;
     margin: 0;
+    word-break: break-all; //wrapping up very long words...stops from going out of the container width
 }

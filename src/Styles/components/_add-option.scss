@@ -7,6 +7,7 @@
 
 .add-option{
     display: flex;
+    flex-direction: column; //will show one top of another for small devices...
     justify-content: space-between;
     padding: $med-Size;
 }
@@ -17,5 +18,16 @@
     padding: $small-Size;
     background: $dark-blue;
     border-bottom: .3rem solid darken($color: $dark-blue, $amount: 10%);
-    margin-right: $small-Size;
+    //margin-right: $small-Size;
+    margin: 0 0 $small-Size 0;
+}
+
+//specifics css for devices having width greater than 45rem (basically for the PC view)
+@media (min-width: 45rem){
+    .add-option{
+        flex-direction: row; //will show side by side for large devices or browser
+    }
+    .add-option-input{
+        margin: 0 $small-Size 0 0;
+    }
 }
